@@ -1,0 +1,12 @@
+resources:
+  jobs:
+    pipeline:
+      name: pipeline
+      schedule:
+        quartz_cron_expression: "0 30 8 ? * SAT"
+        timezone_id: "America/New_York"
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: bronze
+          notebook_task:
+            notebook_path: ../src/bronze.py
