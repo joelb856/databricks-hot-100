@@ -13,3 +13,7 @@
 
 # MAGIC %sql
 # MAGIC CREATE VOLUME IF NOT EXISTS hot100.raw.landing;
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC CREATE VOLUME IF NOT EXISTS hot100.processed.checkpoints;

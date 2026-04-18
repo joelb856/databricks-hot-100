@@ -10,3 +10,8 @@ resources:
         - task_key: bronze
           notebook_task:
             notebook_path: ../src/bronze.py
+        - task_key: silver
+          depends_on:
+            - task_key: bronze
+          notebook_task:
+            notebook_path: ../src/silver.py
