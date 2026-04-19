@@ -13,7 +13,10 @@
 
 # MAGIC %sql
 # MAGIC CREATE VOLUME IF NOT EXISTS hot100.raw.landing;
+# MAGIC CREATE VOLUME IF NOT EXISTS hot100.processed.checkpoints;
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC CREATE VOLUME IF NOT EXISTS hot100.processed.checkpoints;
+# MAGIC CREATE TABLE IF NOT EXISTS hot100.raw.bronze;
+# MAGIC CREATE TABLE IF NOT EXISTS hot100.processed.silver;
+# MAGIC CREATE TABLE IF NOT EXISTS hot100.serving.gold;
