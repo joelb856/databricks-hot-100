@@ -58,7 +58,7 @@ Databricks Asset Bundle definition, including seperate `dev` and `prod` targets.
 ## Getting Started
 
 ### Prerequisites
-- [Databricks Free Edition](https://www.databricks.com/try-databricks)
+- [Databricks Free Edition](https://www.databricks.com/learn/free-edition)
 - [Databricks CLI](https://docs.databricks.com/dev-tools/cli/install.html) with a profile named `hot100`:
 
 ```bash
