@@ -1,6 +1,6 @@
 ## What are we Singing About? (Databricks edition)
 
-This is a new implementation of [a previous project](joelb856/what-are-we-singing-about) to ingest, process, and serve an analysis of the lyics and metadata associated with the [weekly Billboard Hot 100 songs](https://www.billboard.com/charts/hot-100/) using Databricks Free Edition.
+This is a new implementation of [a previous project](https://github.com/joelb856/what-are-we-singing-about) to ingest, process, and serve an analysis of the lyics and metadata associated with the [weekly Billboard Hot 100 songs](https://www.billboard.com/charts/hot-100/) using Databricks Free Edition.
 
 Each Tuesday the pipeline:
 1. Ingests [the latest Hot 100 songs](https://raw.githubusercontent.com/mhollingshead/billboard-hot-100/main/recent.json), including [lyrics](https://lyrist.vercel.app/guide) and [metadata](https://www.last.fm/api)
@@ -77,7 +77,7 @@ databricks bundle run pipeline --profile hot100
 There is currently no logging implemented, but you can confirm it worked by running a query e.g.
 ```
 %sql
-select * from hot100.serving.gold;
+select * from hot100.serving.gold limit 10;
 ```
 
 ### Deploy to prod
