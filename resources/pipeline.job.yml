@@ -3,7 +3,7 @@ resources:
     pipeline:
       name: pipeline
       schedule:
-        quartz_cron_expression: "0 30 8 ? * SAT"
+        quartz_cron_expression: "0 30 8 ? * TUES"
         timezone_id: "America/New_York"
         pause_status: UNPAUSED
       tasks:
