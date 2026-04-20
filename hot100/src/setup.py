@@ -19,4 +19,3 @@
 # MAGIC %sql
 # MAGIC CREATE TABLE IF NOT EXISTS hot100.raw.bronze;
 # MAGIC CREATE TABLE IF NOT EXISTS hot100.processed.silver;
-# MAGIC CREATE TABLE IF NOT EXISTS hot100.serving.gold;

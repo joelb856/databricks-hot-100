@@ -22,6 +22,15 @@ entry_schema = ArrayType(StructType([
     StructField('weeks_on_chart', IntegerType()),
     StructField('duration', LongType()),
     StructField('lyrics', StringType()),
+    StructField('lastfm_listeners', StringType()),
+    StructField('lastfm_playcount', StringType()),
+    StructField('toptags', StructType([
+        StructField('tag', ArrayType(StructType([
+            StructField('name', StringType()),
+            StructField('url', StringType()),
+        ])))
+    ])),
+    StructField('summary', StringType()),
 ]))
 
 nlp_schema = StructType(
@@ -106,10 +115,15 @@ Bronze -> Silver
         F.col('entry.weeks_on_chart').alias('weeks_on_chart'),
         F.col('entry.duration').alias('duration'),
         F.col('entry.lyrics').alias('lyrics'),
+        F.col('entry.lastfm_listeners').alias('lastfm_listeners'),
+        F.col('entry.lastfm_playcount').alias('lastfm_playcount'),
+        F.col('entry.toptags').alias('toptags'),
+        F.col('entry.summary').alias('summary'),
     )
     .withColumn('nlp', analyze_lyrics(F.col('lyrics')))
     .select(
         'date', 'song', 'artist', 'this_week', 'peak_position', 'weeks_on_chart', 'duration',
+        'lastfm_listeners', 'lastfm_playcount', 'toptags', 'summary',
         '_ingest_time', '_source_file',
         F.col('nlp.language').alias('language'),
         F.col('nlp.n_words').alias('n_words'),

@@ -28,30 +28,31 @@ flowchart LR
 
 ## Components
 
-### Ingestion
+### `ingestion/pull_data.py`
+Because of Databricks Free Edition's outbound internet access restrictions, the ingestion script pushed files to the landing zone [using the API](https://docs.databricks.com/api/workspace/files/upload) and was handled with a weekly cron job. With paid access, ingestion could be handled in a workbook as part of the pipeline.
 
-_Coming soon_
+*Note:* the lyric extraction in this repo's script used [Lyrist](https://github.com/asrvd/lyrist), which returns empty JSON object as of 2026. To get lyrics for new songs, consider using the [Genius API](https://docs.genius.com/). Example JSON objects are stored in `example_data`.
 
-### `src/setup.py`
+### `hot100/src/setup.py`
 One-time setup notebook.
 
-### `src/bronze.py`
+### `hot100/src/bronze.py`
 Ingests raw JSON files from `hot100.raw.landing` into a Delta table with Auto Loader as a streaming job. Appends additional metadata (`_ingest_time`, `_source_file`).
 
-### `src/silver.py`
+### `hot100/src/silver.py`
 Reads from bronze as a stream, explodes each week's JSON into one row per song, and enriches each row with some basic NLP features using a `pandas_udf`:
 - **Language detection** with `langdetect`
 - **Word count** after basic lyric cleaning
 - **Affect frequencies** with the [NRC Emotion Lexicon](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm).
 
-### `src/gold.py`
+### `hot100/src/gold.py`
 Computes weekly aggregates from silver and upserts from a staging table into the serving table with a `MERGE` statement.
 
-### `resources/pipeline.job.yml`
+### `hot100/resources/pipeline.job.yml`
 Runs the bronze → silver → gold notebooks in sequence every Tuesday at 8:30am.
 
-### `databricks.yml`
-Databricks Asset Bundle definition, including seperate `dev` and `prod` targets.
+### `hot100/databricks.yml`
+Databricks Asset Bundle definition, including separate `dev` and `prod` targets.
 
 ---
 
@@ -69,12 +70,13 @@ databricks configure --profile hot100
 By default, triggers are paused in development mode. To test the pipeline, ensure there is at least one new JSON file in `hot100.raw.landing` and run it manually:
 
 ```bash
+cd hot100
 databricks bundle deploy --profile hot100
 databricks bundle run setup --profile hot100
 databricks bundle run pipeline --profile hot100
 ```
 
-There is currently no logging implemented, but you can confirm it worked by running a query e.g.
+There is currently no logging implemented, but you can confirm it worked by running a query in a new workbook e.g.
 ```
 %sql
 select * from hot100.serving.gold limit 10;
