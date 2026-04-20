@@ -31,7 +31,7 @@ flowchart LR
 ### `ingestion/pull_data.py`
 Because of Databricks Free Edition's outbound internet access restrictions, the ingestion script pushed files to the landing zone [using the API](https://docs.databricks.com/api/workspace/files/upload) and was handled with a weekly cron job. With paid access, ingestion could be handled in a workbook as part of the pipeline.
 
-*Note:* the lyric extraction in this repo's script used [Lyrist](https://github.com/asrvd/lyrist), which returns empty JSON object as of 2026. To get lyrics for new songs, consider using the [Genius API](https://docs.genius.com/). Example JSON objects are stored in `example_data`.
+*Note:* the lyric extraction in this repo's script used [Lyrist](https://github.com/asrvd/lyrist), which returns empty JSON object as of 2026. To get lyrics for new songs, consider using the [Genius API](https://docs.genius.com/). Example JSON objects with lyrics are stored in `example_data`.
 
 ### `hot100/src/setup.py`
 One-time setup notebook.
